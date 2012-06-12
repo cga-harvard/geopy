@@ -68,7 +68,7 @@ class GoogleV3(Geocoder):
         '''Returns a Premier account signed url.'''
         params['client'] = self.client_id
         url_params = {'protocol': self.protocol, 'domain': self.domain,
-                      'params': urlencode(params)}
+                      'params': urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))}
         secret = base64.urlsafe_b64decode(self.secret_key)
         url_params['url_part'] = (
             '/maps/api/geocode/json?%(params)s' % url_params)
@@ -81,7 +81,7 @@ class GoogleV3(Geocoder):
     def get_url(self, params):
         '''Returns a standard geocoding api url.'''
         return 'http://%(domain)s/maps/api/geocode/json?%(params)s' % (
-            {'domain': self.domain, 'params': urlencode(params)})
+            {'domain': self.domain, 'params': urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))})
     
     def geocode_url(self, url, exactly_one=True):
         '''Fetches the url and returns the result.'''
