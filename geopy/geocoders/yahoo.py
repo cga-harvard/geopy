@@ -34,7 +34,7 @@ class Yahoo(Geocoder):
                   'appid': self.app_id,
                   'flags': 'J'
                  }
-        url = self.BASE_URL % urlencode(params)
+        url = self.BASE_URL %  urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))
         util.logger.debug("Fetching %s..." % url)
         return self.geocode_url(url, exactly_one)
 
@@ -80,5 +80,5 @@ class Yahoo(Geocoder):
                   'appid': self.app_id,
                   'flags': 'J'
                  }
-        url = self.BASE_URL % urlencode(params)
+        url = self.BASE_URL %  urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))
         return self.geocode_url(url, exactly_one)

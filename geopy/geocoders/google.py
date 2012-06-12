@@ -77,7 +77,7 @@ class Google(Geocoder):
         if self.api_key:
             params['key'] = self.api_key
         
-        url = self.url % urlencode(params)
+        url = self.url % urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))
         return self.geocode_url(url, exactly_one)
 
     def geocode_url(self, url, exactly_one=True):

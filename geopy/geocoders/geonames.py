@@ -34,7 +34,7 @@ class GeoNames(Geocoder):
         if self.country_bias:
             params['countryBias'] = self.country_bias
         
-        url = self.url % urlencode(params)
+        url = self.url %  urlencode(dict([k, v.encode('utf-8')] for k, v in params.items()))
         return self.geocode_url(url, exactly_one)
     
     def geocode_url(self, url, exactly_one=True):
